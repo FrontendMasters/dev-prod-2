@@ -7,7 +7,8 @@ const DEFAULT_CONFIG = {
   },
   title: "Developer Productivity, v2",
   subtitle: "become the dev that confuses everyone else",
-  frontendMastersLink: "https://frontendmasters.com/workshops/dev-prod-2/",
+  frontendMastersLink:
+    "https://frontendmasters.com/workshops/developer-productivity-v2/",
   description:
     "The purpose of this course is to set the foundation for how to approach creating a highly tuned environment for your needs. This is not suppose to be prescriptive but illuminating.",
   keywords: [
