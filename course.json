@@ -1,19 +1,29 @@
 {
   "author": {
-    "name": "Brian Holt",
-    "company": "Neon"
+    "name": "ThePrimeagen",
+    "company": "TheStartup, Try Harder™"
   },
-  "title": "Next.js Course Starter Kit",
-  "subtitle": "for Frontend Masters",
-  "frontendMastersLink": "https://frontendmasters.com/courses/complete-react-v9/",
+  "title": "Developer Productivity 2",
+  "subtitle": "become the dev that confuses everyone else",
+  "frontendMastersLink": "https://frontendmasters.com/workshops/dev-prod-2",
   "social": {
-    "linkedin": "btholt",
-    "github": "btholt",
-    "twitter": "holtbt",
-    "bluesky": "brianholt.me"
+    "twitter": "theprimeagen",
+    "twitch": "theprimeagen",
+    "youtube": "theprimeagen"
   },
-  "description": "A starter kit for making really amazing courses, optimized for Frontend Masters",
-  "keywords": ["your", "Google", "keywords", "here"],
+  "description": "a walkthrough of making your life a bit nicer by understanding how your operating system works",
+  "keywords": [
+    "ThePrimeagen",
+    "Live Coding",
+    "TypeScript",
+    "JavaScript",
+    "Git",
+    "Github",
+    "Algorithms",
+    "DataStructures",
+    "Data Structures",
+    "TS"
+  ],
   "productionBaseUrl": "/dev-prod-2",
   "csvPath": "./out/lessons.csv"
 }
