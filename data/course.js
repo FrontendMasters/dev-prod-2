@@ -2,19 +2,30 @@ import config from "../course.json";
 
 const DEFAULT_CONFIG = {
   author: {
-    name: "An Author",
-    company: "An Author's Company",
+    name: "ThePrimeagen",
+    company: "TheStartup, Try Harder",
   },
-  title: "A Superb Course",
-  subtitle: "That Teaches Nice Things",
-  frontendMastersLink: "",
-  description: "A nice course for nice people.",
-  keywords: ["a nice course", "for people", "to learn", "nice things"],
+  title: "Developer Productivity, v2",
+  subtitle: "become the dev that confuses everyone else",
+  frontendMastersLink: "https://frontendmasters.com/workshops/dev-prod-2/",
+  description:
+    "The purpose of this course is to set the foundation for how to approach creating a highly tuned environment for your needs. This is not suppose to be prescriptive but illuminating.",
+  keywords: [
+    "ThePrimeagen",
+    "Live Coding",
+    "TypeScript",
+    "JavaScript",
+    "Golang",
+    "RustLang",
+    "Go",
+    "Rust",
+    "TS",
+    "JS",
+  ],
   social: {
-    linkedin: "btholt",
-    github: "btholt",
-    twitter: "holtbt",
-    bluesky: "brianholt.me",
+    twitter: "ThePrimeagen",
+    twitch: "ThePrimeagen",
+    youtube: "ThePrimeagen",
   },
   productionBaseUrl: "/",
 };
