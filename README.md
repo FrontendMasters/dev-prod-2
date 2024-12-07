@@ -4,5 +4,5 @@ This repo generates the course website for the [Developer Productivity 2][course
 [Please click here][website] to head to the course website.
 
 [fem]: https://www.frontendmasters.com
-[website]: https://theprimeagen.github.io/dev-prod-2/
+[website]: https://frontendmasters.github.io/dev-prod-2/
 [course]: https://frontendmasters.com/workshops/developer-productivity-v2/
