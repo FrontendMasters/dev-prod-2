@@ -1,0 +1,15 @@
+order,sectionTitle,lessonTitle,slug,sectionIcon,filePath,description
+01A,Intro,Introduction to dev productivity,intro/intro,info-circle,/lessons/intro/intro,"there isn't a right way, but there is my way and its pretty good"
+02A,Your Env,Intro into your env,your-env/your-env,info-circle,/lessons/your-env/your-env,lets take a tour
+02B,Your Env,Ansible,your-env/ansible,info-circle,/lessons/your-env/ansible,ansible
+02C,Your Env,Reinvent the wheel,your-env/roll-your-own,info-circle,/lessons/your-env/roll-your-own,its one of the best past times
+02D,Your Env,Put it all together,your-env/neovim,info-circle,/lessons/your-env/neovim,Life is but a curl away...
+02E,Your Env,Wait A Second,your-env/wait,info-circle,/lessons/your-env/wait,what about all the dot files?
+03A,Navigation,Window Managers,navigation/window,info-circle,/lessons/navigation/window,window managers
+03B,Navigation,Tmux,navigation/tmux,info-circle,/lessons/navigation/tmux,tmux is a great way to navigate around the terminal
+04A,Tools,Intro,tools/intro,info-circle,/lessons/tools/intro,The best of the best
+04B,Tools,Tools,tools/jq,info-circle,/lessons/tools/jq,jq a hidden treasure
+04C,Tools,Unix Tools!,tools/unix,info-circle,/lessons/tools/unix,unix tools
+04D,Tools,Tools,tools/neovim,info-circle,/lessons/tools/neovim,your most used tool is the editor
+05A,Terminal,Terminally Retired,terminal/intro,info-circle,/lessons/terminal/intro,this is my favorite place to be
+06A,Outro,Outro,outro/outro,info-circle,/lessons/outro/outro,goodbye
