@@ -1,0 +1,258 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><link rel="apple-touch-icon" sizes="180x180" href="/dev-prod-2/images/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/dev-prod-2/images/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/dev-prod-2/images/favicon-16x16.png"/><link rel="icon" type="image/png" sizes="16x16" href="/dev-prod-2/images/favicon-16x16.png"/><link rel="icon" type="image/x-icon" href="/dev-prod-2/images/favicon.ico"/><title>Wait A Second – Developer Productivity 2</title><meta name="description" content="what about all the dot files?"/><meta name="keywords" content="ThePrimeagen,Live Coding,TypeScript,JavaScript,Git,Github,Algorithms,DataStructures,Data Structures,TS"/><meta name="og:description" content="what about all the dot files?"/><meta name="og:title" content="Wait A Second – Developer Productivity 2"/><meta name="og:image" content="/dev-prod-2/images/social-share-cover.jpg"/><meta name="twitter:card" content="summary_large_image"/><meta name="next-head-count" content="14"/><link data-next-font="size-adjust" rel="preconnect" href="/" crossorigin="anonymous"/><link rel="preload" href="/dev-prod-2/_next/static/css/77aba6635732f01b.css" as="style"/><link rel="stylesheet" href="/dev-prod-2/_next/static/css/77aba6635732f01b.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/dev-prod-2/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js"></script><script src="/dev-prod-2/_next/static/chunks/webpack-8dbb88a6459cf950.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/framework-ecc4130bc7a58a64.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/main-27b76dd530f8f7ed.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/pages/_app-e295491404fe296d.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/pages/lessons/%5Bsection%5D/%5Bslug%5D-7e79801f4e913ad6.js" defer=""></script><script src="/dev-prod-2/_next/static/9mr2VSKi99OqOhejAzbQC/_buildManifest.js" defer=""></script><script src="/dev-prod-2/_next/static/9mr2VSKi99OqOhejAzbQC/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div class="remix-app"><header class="navbar"><h1 class="navbar-brand"><a href="/dev-prod-2">Developer Productivity 2</a></h1><div class="navbar-info"><a href="https://frontendmasters.com/workshops/developer-productivity-v2/" class="cta-btn">Watch on Frontend Masters</a></div></header><div class="content-container"><div class="main"><div class="lesson-container"><div class="lesson"><div class="lesson-content"><h2>We only have talked about getting the software up</h2>
+<p>What about dotfiles...
+What about configuration...
+WHAT ABOUT MY CUSTOMIZATIONS</p>
+<br>
+<br>
+
+<p>For those unfamiliar with the term dotfiles, it simple means a script that is
+ran at the start of your program.  A <code>.bashrc</code> / <code>.zshrc</code> / <code>.vimrc</code> are all
+examples of dotfiles that run before the program startup is complete.  It is
+the place for you to register your custom functionality or to alter program
+behavior</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Well we already have everything we need</h2>
+<p>We have everything we need to get started, we have our reliable environmental
+script to run, we just need one script that sets up our environment!</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>The Env Idea</h2>
+<ul>
+<li>make a script that installs all the environment files.</li>
+<li>make one or more directories to where you like to install files to</li>
+</ul>
+<br>
+<br>
+
+<h3>Lets do this!</h3>
+<ul>
+<li>whiteboard time!</li>
+<li>code time!</li>
+<li>lets start by getting the basics of the script ready<ul>
+<li>dry run</li>
+</ul>
+</li>
+</ul>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Expected Code</h2>
+<pre><code class="hljs language-bash"><span class="hljs-meta">#!/usr/bin/env bash</span>
+
+script_dir=<span class="hljs-string">&quot;<span class="hljs-subst">$(cd $(dirname <span class="hljs-string">&quot;<span class="hljs-variable">${BASH_SOURCE[0]}</span>&quot;</span>)</span> &amp;&amp; pwd)&quot;</span>
+dry=<span class="hljs-string">&quot;0&quot;</span>
+
+<span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$#</span> &gt; 0 ]]; <span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span> == <span class="hljs-string">&quot;--dry&quot;</span> ]]; <span class="hljs-keyword">then</span>
+        dry=<span class="hljs-string">&quot;1&quot;</span>
+    <span class="hljs-keyword">fi</span>
+    <span class="hljs-built_in">shift</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-function"><span class="hljs-title">log</span></span>() {
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$dry</span> == <span class="hljs-string">&quot;1&quot;</span> ]]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[DRY_RUN]: <span class="hljs-variable">$@</span>&quot;</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">execute</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;execute: <span class="hljs-variable">$@</span>&quot;</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$dry</span> == <span class="hljs-string">&quot;1&quot;</span> ]]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">return</span>
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>
+}
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;--------- dev-env ---------&quot;</span>
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Copy time</h2>
+<p>Lets create the copy function that will bring over every source directory to
+the target directory</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Expected code</h2>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> <span class="hljs-variable">$script_dir</span>
+<span class="hljs-function"><span class="hljs-title">copy_dir</span></span>() {
+    <span class="hljs-built_in">pushd</span> <span class="hljs-variable">$1</span>
+    to=<span class="hljs-variable">$2</span>
+    <span class="hljs-built_in">dirs</span>=$(find . -maxdepth 1 -mindepth 1 -<span class="hljs-built_in">type</span> d)
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">dir</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$dirs</span>; <span class="hljs-keyword">do</span>
+        execute <span class="hljs-built_in">rm</span> -rf <span class="hljs-variable">$to</span>/<span class="hljs-variable">$dir</span>
+        execute <span class="hljs-built_in">cp</span> -r <span class="hljs-variable">$dir</span> <span class="hljs-variable">$to</span>/<span class="hljs-variable">$dir</span>
+    <span class="hljs-keyword">done</span>
+    <span class="hljs-built_in">popd</span>
+}
+
+copy_dir .config <span class="hljs-variable">$XDG_CONFIG_HOME</span>
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>And just like that</h2>
+<p>We have ourselves a way to copy over directories for all of our programs... but
+what about one off scripts?</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Expected Code</h2>
+<pre><code class="hljs language-bash"><span class="hljs-function"><span class="hljs-title">copy_file</span></span>() {
+    from=<span class="hljs-variable">$1</span>
+    to=<span class="hljs-variable">$2</span>
+    name=$(<span class="hljs-built_in">basename</span> <span class="hljs-variable">$from</span>)
+    execute <span class="hljs-built_in">rm</span> <span class="hljs-variable">$to</span>/<span class="hljs-variable">$name</span> 
+    execute <span class="hljs-built_in">cp</span> <span class="hljs-variable">$from</span> <span class="hljs-variable">$to</span>/<span class="hljs-variable">$name</span>
+}
+
+copy_file .specialrc ~/
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>We make things bigger than they are</h2>
+<p>this will solve about 99% of all dotfile management issues.</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</div><div class="lesson-links"><a href="/dev-prod-2/lessons/your-env/neovim" class="prev">← Previous</a><a href="/dev-prod-2/lessons/navigation/window" class="next">Next →</a></div></div><div class="details-bg"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="154" height="154" viewBox="0 0 154 154"><defs><clipPath id="clip-path"><rect id="Rectangle_2238" data-name="Rectangle 2238" width="154" height="154" transform="translate(9467 350)" fill="#fff" stroke="#707070" stroke-width="1"></rect></clipPath><clipPath id="clip-corner-image-active"><rect width="154" height="154"></rect></clipPath></defs><g id="corner-image-active" clip-path="url(#clip-corner-image-active)"><g id="Corner-image-active-2" data-name="Corner-image-active" transform="translate(-9467 -350)" clip-path="url(#clip-path)"><path id="Subtraction_34" data-name="Subtraction 34" d="M-3857.365,1740.766h0l-7.07-7.07,12.89-12.89v14.142l-5.818,5.818Zm-14.142-14.142h0l-7.071-7.07,27.033-27.033v14.143l-19.96,19.96Zm-14.143-14.143h0l-7.07-7.069,41.175-41.175v14.142Zm-14.142-14.142h0l-7.07-7.069,55.317-55.317v14.142Zm-14.142-14.142h0l-7.07-7.069,69.459-69.459v14.142Zm-14.142-14.142h0l-7.07-7.069,76.739-76.739h6.862v7.28Zm-14.143-14.143h0l-7.07-7.069,62.6-62.6h14.142Zm-14.142-14.142h0l-7.07-7.069,48.454-48.454h14.142Zm-14.142-14.142h0l-7.07-7.069,34.312-34.312h14.142Zm-14.142-14.142h0l-7.07-7.069,20.17-20.17h14.142Zm-14.142-14.142h0l-7.071-7.071,6.027-6.027h14.144l-13.1,13.1Zm367.24-56.114v-.909l.455.455-.453.453Z" transform="translate(13472.546 -1236.766)" fill="var(--corner-fill)"></path></g></g></svg></div></div></div></div><footer class="footer"><ul class="socials"><li class="social"><a href="https://twitter.com/theprimeagen"><svg fill="none" height="auto" width="32" xmlns="http://www.w3.org/2000/svg" viewBox="0.254 0.25 500 451.95400000000006"><path d="M394.033.25h76.67L303.202 191.693l197.052 260.511h-154.29L225.118 294.205 86.844 452.204H10.127l179.16-204.77L.254.25H158.46l109.234 144.417zm-26.908 406.063h42.483L135.377 43.73h-45.59z" fill="var(--footer-icons)"></path></svg></a></li><li class="social"><div class="terms"><p>Content Licensed Under CC-BY-NC-4.0</p><p>Code Samples and Exercises Licensed Under Apache 2.0</p><p>Site Designed by<!-- --> <a href="https://www.alexdanielson.com/">Alex Danielson</a></p></div></li></ul></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"attributes":{"title":"Wait A Second","description":"what about all the dot files?"},"html":"\u003ch2\u003eWe only have talked about getting the software up\u003c/h2\u003e\n\u003cp\u003eWhat about dotfiles...\nWhat about configuration...\nWHAT ABOUT MY CUSTOMIZATIONS\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eFor those unfamiliar with the term dotfiles, it simple means a script that is\nran at the start of your program.  A \u003ccode\u003e.bashrc\u003c/code\u003e / \u003ccode\u003e.zshrc\u003c/code\u003e / \u003ccode\u003e.vimrc\u003c/code\u003e are all\nexamples of dotfiles that run before the program startup is complete.  It is\nthe place for you to register your custom functionality or to alter program\nbehavior\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eWell we already have everything we need\u003c/h2\u003e\n\u003cp\u003eWe have everything we need to get started, we have our reliable environmental\nscript to run, we just need one script that sets up our environment!\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eThe Env Idea\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003emake a script that installs all the environment files.\u003c/li\u003e\n\u003cli\u003emake one or more directories to where you like to install files to\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch3\u003eLets do this!\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003ewhiteboard time!\u003c/li\u003e\n\u003cli\u003ecode time!\u003c/li\u003e\n\u003cli\u003elets start by getting the basics of the script ready\u003cul\u003e\n\u003cli\u003edry run\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eExpected Code\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003e\u003cspan class=\"hljs-meta\"\u003e#!/usr/bin/env bash\u003c/span\u003e\n\nscript_dir=\u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-subst\"\u003e$(cd $(dirname \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-variable\"\u003e${BASH_SOURCE[0]}\u003c/span\u003e\u0026quot;\u003c/span\u003e)\u003c/span\u003e \u0026amp;\u0026amp; pwd)\u0026quot;\u003c/span\u003e\ndry=\u003cspan class=\"hljs-string\"\u003e\u0026quot;0\u0026quot;\u003c/span\u003e\n\n\u003cspan class=\"hljs-keyword\"\u003ewhile\u003c/span\u003e [[ \u003cspan class=\"hljs-variable\"\u003e$#\u003c/span\u003e \u0026gt; 0 ]]; \u003cspan class=\"hljs-keyword\"\u003edo\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003eif\u003c/span\u003e [[ \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-variable\"\u003e$1\u003c/span\u003e\u0026quot;\u003c/span\u003e == \u003cspan class=\"hljs-string\"\u003e\u0026quot;--dry\u0026quot;\u003c/span\u003e ]]; \u003cspan class=\"hljs-keyword\"\u003ethen\u003c/span\u003e\n        dry=\u003cspan class=\"hljs-string\"\u003e\u0026quot;1\u0026quot;\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003efi\u003c/span\u003e\n    \u003cspan class=\"hljs-built_in\"\u003eshift\u003c/span\u003e\n\u003cspan class=\"hljs-keyword\"\u003edone\u003c/span\u003e\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-title\"\u003elog\u003c/span\u003e\u003c/span\u003e() {\n    \u003cspan class=\"hljs-keyword\"\u003eif\u003c/span\u003e [[ \u003cspan class=\"hljs-variable\"\u003e$dry\u003c/span\u003e == \u003cspan class=\"hljs-string\"\u003e\u0026quot;1\u0026quot;\u003c/span\u003e ]]; \u003cspan class=\"hljs-keyword\"\u003ethen\u003c/span\u003e\n        \u003cspan class=\"hljs-built_in\"\u003eecho\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;[DRY_RUN]: \u003cspan class=\"hljs-variable\"\u003e$@\u003c/span\u003e\u0026quot;\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003eelse\u003c/span\u003e\n        \u003cspan class=\"hljs-built_in\"\u003eecho\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-variable\"\u003e$@\u003c/span\u003e\u0026quot;\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003efi\u003c/span\u003e\n}\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-title\"\u003eexecute\u003c/span\u003e\u003c/span\u003e() {\n    \u003cspan class=\"hljs-built_in\"\u003elog\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;execute: \u003cspan class=\"hljs-variable\"\u003e$@\u003c/span\u003e\u0026quot;\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003eif\u003c/span\u003e [[ \u003cspan class=\"hljs-variable\"\u003e$dry\u003c/span\u003e == \u003cspan class=\"hljs-string\"\u003e\u0026quot;1\u0026quot;\u003c/span\u003e ]]; \u003cspan class=\"hljs-keyword\"\u003ethen\u003c/span\u003e\n        \u003cspan class=\"hljs-built_in\"\u003ereturn\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003efi\u003c/span\u003e\n\n    \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-variable\"\u003e$@\u003c/span\u003e\u0026quot;\u003c/span\u003e\n}\n\n\u003cspan class=\"hljs-built_in\"\u003elog\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;--------- dev-env ---------\u0026quot;\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eCopy time\u003c/h2\u003e\n\u003cp\u003eLets create the copy function that will bring over every source directory to\nthe target directory\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eExpected code\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003e\u003cspan class=\"hljs-built_in\"\u003ecd\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$script_dir\u003c/span\u003e\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-title\"\u003ecopy_dir\u003c/span\u003e\u003c/span\u003e() {\n    \u003cspan class=\"hljs-built_in\"\u003epushd\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$1\u003c/span\u003e\n    to=\u003cspan class=\"hljs-variable\"\u003e$2\u003c/span\u003e\n    \u003cspan class=\"hljs-built_in\"\u003edirs\u003c/span\u003e=$(find . -maxdepth 1 -mindepth 1 -\u003cspan class=\"hljs-built_in\"\u003etype\u003c/span\u003e d)\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003edir\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003ein\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$dirs\u003c/span\u003e; \u003cspan class=\"hljs-keyword\"\u003edo\u003c/span\u003e\n        execute \u003cspan class=\"hljs-built_in\"\u003erm\u003c/span\u003e -rf \u003cspan class=\"hljs-variable\"\u003e$to\u003c/span\u003e/\u003cspan class=\"hljs-variable\"\u003e$dir\u003c/span\u003e\n        execute \u003cspan class=\"hljs-built_in\"\u003ecp\u003c/span\u003e -r \u003cspan class=\"hljs-variable\"\u003e$dir\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$to\u003c/span\u003e/\u003cspan class=\"hljs-variable\"\u003e$dir\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003edone\u003c/span\u003e\n    \u003cspan class=\"hljs-built_in\"\u003epopd\u003c/span\u003e\n}\n\ncopy_dir .config \u003cspan class=\"hljs-variable\"\u003e$XDG_CONFIG_HOME\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eAnd just like that\u003c/h2\u003e\n\u003cp\u003eWe have ourselves a way to copy over directories for all of our programs... but\nwhat about one off scripts?\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eExpected Code\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-title\"\u003ecopy_file\u003c/span\u003e\u003c/span\u003e() {\n    from=\u003cspan class=\"hljs-variable\"\u003e$1\u003c/span\u003e\n    to=\u003cspan class=\"hljs-variable\"\u003e$2\u003c/span\u003e\n    name=$(\u003cspan class=\"hljs-built_in\"\u003ebasename\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$from\u003c/span\u003e)\n    execute \u003cspan class=\"hljs-built_in\"\u003erm\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$to\u003c/span\u003e/\u003cspan class=\"hljs-variable\"\u003e$name\u003c/span\u003e \n    execute \u003cspan class=\"hljs-built_in\"\u003ecp\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$from\u003c/span\u003e \u003cspan class=\"hljs-variable\"\u003e$to\u003c/span\u003e/\u003cspan class=\"hljs-variable\"\u003e$name\u003c/span\u003e\n}\n\ncopy_file .specialrc ~/\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eWe make things bigger than they are\u003c/h2\u003e\n\u003cp\u003ethis will solve about 99% of all dotfile management issues.\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n","markdown":"\n## We only have talked about getting the software up\nWhat about dotfiles...\nWhat about configuration...\nWHAT ABOUT MY CUSTOMIZATIONS\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nFor those unfamiliar with the term dotfiles, it simple means a script that is\nran at the start of your program.  A `.bashrc` / `.zshrc` / `.vimrc` are all\nexamples of dotfiles that run before the program startup is complete.  It is\nthe place for you to register your custom functionality or to alter program\nbehavior\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Well we already have everything we need\nWe have everything we need to get started, we have our reliable environmental\nscript to run, we just need one script that sets up our environment!\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## The Env Idea\n* make a script that installs all the environment files.\n* make one or more directories to where you like to install files to\n\n\u003cbr\u003e\n\u003cbr\u003e\n\n### Lets do this!\n* whiteboard time!\n* code time!\n* lets start by getting the basics of the script ready\n  * dry run\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Expected Code\n```bash\n#!/usr/bin/env bash\n\nscript_dir=\"$(cd $(dirname \"${BASH_SOURCE[0]}\") \u0026\u0026 pwd)\"\ndry=\"0\"\n\nwhile [[ $# \u003e 0 ]]; do\n    if [[ \"$1\" == \"--dry\" ]]; then\n        dry=\"1\"\n    fi\n    shift\ndone\n\nlog() {\n    if [[ $dry == \"1\" ]]; then\n        echo \"[DRY_RUN]: $@\"\n    else\n        echo \"$@\"\n    fi\n}\n\nexecute() {\n    log \"execute: $@\"\n    if [[ $dry == \"1\" ]]; then\n        return\n    fi\n\n    \"$@\"\n}\n\nlog \"--------- dev-env ---------\"\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Copy time\nLets create the copy function that will bring over every source directory to\nthe target directory\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Expected code\n```bash\ncd $script_dir\ncopy_dir() {\n    pushd $1\n    to=$2\n    dirs=$(find . -maxdepth 1 -mindepth 1 -type d)\n    for dir in $dirs; do\n        execute rm -rf $to/$dir\n        execute cp -r $dir $to/$dir\n    done\n    popd\n}\n\ncopy_dir .config $XDG_CONFIG_HOME\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## And just like that\nWe have ourselves a way to copy over directories for all of our programs... but\nwhat about one off scripts?\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Expected Code\n```bash\ncopy_file() {\n    from=$1\n    to=$2\n    name=$(basename $from)\n    execute rm $to/$name \n    execute cp $from $to/$name\n}\n\ncopy_file .specialrc ~/\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## We make things bigger than they are\nthis will solve about 99% of all dotfile management issues.\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n","slug":"wait","title":"Wait A Second","section":"Your Env","icon":"info-circle","filePath":"/home/runner/work/dev-prod-2/dev-prod-2/lessons/02-your-env/E-wait.md","nextSlug":"/dev-prod-2/lessons/navigation/window","prevSlug":"/dev-prod-2/lessons/your-env/neovim"}},"__N_SSG":true},"page":"/lessons/[section]/[slug]","query":{"section":"your-env","slug":"wait"},"buildId":"9mr2VSKi99OqOhejAzbQC","assetPrefix":"/dev-prod-2","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

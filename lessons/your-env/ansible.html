@@ -1,0 +1,532 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><link rel="apple-touch-icon" sizes="180x180" href="/dev-prod-2/images/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/dev-prod-2/images/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/dev-prod-2/images/favicon-16x16.png"/><link rel="icon" type="image/png" sizes="16x16" href="/dev-prod-2/images/favicon-16x16.png"/><link rel="icon" type="image/x-icon" href="/dev-prod-2/images/favicon.ico"/><title>Ansible – Developer Productivity 2</title><meta name="description" content="ansible"/><meta name="keywords" content="ThePrimeagen,Live Coding,TypeScript,JavaScript,Git,Github,Algorithms,DataStructures,Data Structures,TS"/><meta name="og:description" content="ansible"/><meta name="og:title" content="Ansible – Developer Productivity 2"/><meta name="og:image" content="/dev-prod-2/images/social-share-cover.jpg"/><meta name="twitter:card" content="summary_large_image"/><meta name="next-head-count" content="14"/><link data-next-font="size-adjust" rel="preconnect" href="/" crossorigin="anonymous"/><link rel="preload" href="/dev-prod-2/_next/static/css/77aba6635732f01b.css" as="style"/><link rel="stylesheet" href="/dev-prod-2/_next/static/css/77aba6635732f01b.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/dev-prod-2/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js"></script><script src="/dev-prod-2/_next/static/chunks/webpack-8dbb88a6459cf950.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/framework-ecc4130bc7a58a64.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/main-27b76dd530f8f7ed.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/pages/_app-e295491404fe296d.js" defer=""></script><script src="/dev-prod-2/_next/static/chunks/pages/lessons/%5Bsection%5D/%5Bslug%5D-7e79801f4e913ad6.js" defer=""></script><script src="/dev-prod-2/_next/static/9mr2VSKi99OqOhejAzbQC/_buildManifest.js" defer=""></script><script src="/dev-prod-2/_next/static/9mr2VSKi99OqOhejAzbQC/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div class="remix-app"><header class="navbar"><h1 class="navbar-brand"><a href="/dev-prod-2">Developer Productivity 2</a></h1><div class="navbar-info"><a href="https://frontendmasters.com/workshops/developer-productivity-v2/" class="cta-btn">Watch on Frontend Masters</a></div></header><div class="content-container"><div class="main"><div class="lesson-container"><div class="lesson"><div class="lesson-content"><h2>Ansible</h2>
+<p>Now a long running way I have been using to manage my dotfiles have been
+exclusively through ansible.  There are several pluses to managing through
+ansible and there are some negatives</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Pros</h2>
+<ul>
+<li>there is tons of online documentation</li>
+<li>its used more than just managing dotfiles</li>
+<li>ansible vault allows for plain storage of ssh keys!  which is really cool</li>
+<li>you can also store a bunch of other cool stuff with ansible vault (think auth passcodes)</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>it can be terribly slow</li>
+<li>it can be hard to make it work for certain tasks, such as installing neovim
+plugins</li>
+<li>tags can be great and super annoying</li>
+<li>yaml sucks</li>
+</ul>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Basic Ansible</h2>
+<p>lets create a simple ansible script to clone neovim from source and build it
+from a specific tagged version</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>What is ansible?</h2>
+<p>From their github <br></p>
+<blockquote>
+<p>Ansible is a radically simple IT automation system. It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration. Ansible makes complex changes like zero-downtime rolling updates with load balancers easy. More information on the Ansible website.</p>
+</blockquote>
+<p>You are probably thinking... wait... aren&#39;t we talking about dotfiles and environments?</p>
+<br>
+<br>
+
+<p>Why yes we are!</p>
+<br>
+<br>
+
+<p>This is a tool designed for &quot;servers&quot; and if you squint your eyes you will
+realize that you are just working on a &quot;server.&quot;</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>NOTE: feel free to just watch</h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<h2>Install ansible</h2>
+<p>as all adventures start...</p>
+<pre><code>pip3 install ansible
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>The heart of ansible</h2>
+<p>Typically when you are working with ansible you are using an inventory, which
+is a list of all servers you have proper access to, and a series of playbooks.
+The playbooks are where we specify the tasks we wish to perform on one or more
+nodes (machines).  The playbook is the heart of ansible</p>
+<br>
+<br>
+
+<p>As a friend once said</p>
+<blockquote>
+<p>ansible is the helicopter that drops godzilla</p>
+<p>... godzilla being k8s</p>
+</blockquote>
+<br>
+<br>
+
+<p>Since we are operating on our own machine we wont need the inventory part, its
+just <code>localhost</code></p>
+<br>
+<br>
+
+<p>Lets just jump right into the playbook side of ansible which is where all the
+work is done</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Your First Playbook</h2>
+<p>Lets start off by creating a playbook that will use git to download the
+contents of neovim to a directory in a directory of our choosing</p>
+<ul>
+<li>create a new directory, lets call it <code>mfansible</code></li>
+<li>create a file called <code>neovim.yml</code></li>
+<li>input the following</li>
+</ul>
+<pre><code class="hljs language-yml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">My</span> <span class="hljs-string">first</span> <span class="hljs-string">playbook</span>
+  <span class="hljs-attr">hosts:</span> <span class="hljs-string">localhost</span>
+  <span class="hljs-attr">tasks:</span>
+</code></pre><p>with this alone we can now execute ansible and see the effects</p>
+<pre><code>ansible-playbook neovim.yml
+</code></pre><p>and you should see output that is similar to</p>
+<pre><code>➜  ansible-neovim-example git:(master) ✗ ansible-playbook neovim.yml
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match &#x27;all&#x27;
+
+PLAY [The Great Neovim editor] *****************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************
+ok: [localhost]
+
+PLAY RECAP *************************************************************************************************************************
+localhost                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Congrats!</h2>
+<p>you have ran your first ansible script!</p>
+<p>Lets do some git</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Lets clone down neovim!</h2>
+<p>When it comes to using ansible, one of my favorite features is the docs and how
+they are organized.  it just makes it so simple to google and get the exact
+answer out you need.  ChatGPT is nice to use, but can sometimes lead you into
+too much usage of odd features like scripting</p>
+<ul>
+<li>Google ansible git clone</li>
+<li>scroll the documentation and copy the one they suggest</li>
+<li>perhaps combine a few to make this most efficient!</li>
+</ul>
+<br>
+<br>
+
+<p>But where do we put the code we find?  Well... remember that empty <code>tasks</code> key?</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Expected Task Output</h2>
+<pre><code class="hljs language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">My</span> <span class="hljs-string">first</span> <span class="hljs-string">playbook</span>
+  <span class="hljs-attr">hosts:</span> <span class="hljs-string">localhost</span>
+  <span class="hljs-attr">tasks:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Git</span> <span class="hljs-string">neovim</span>
+    <span class="hljs-attr">ansible.builtin.git:</span>
+      <span class="hljs-attr">repo:</span> <span class="hljs-string">&quot;https://github.com/neovim/neovim.git&quot;</span>
+      <span class="hljs-attr">dest:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">{{ lookup(&#x27;ansible.builtin.env&#x27;, &#x27;HOME&#x27;) }}</span>/personal/neovim&quot;</span>
+      <span class="hljs-attr">version:</span> <span class="hljs-string">v0.10.2</span>
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Become familiar with the build first</h2>
+<p>there will be several libs that you may require to get this working so to do
+this correctly you will first want to build neovim by hand and keep track of
+the libraries that you need.  There is likely a list of requirements in the
+<a href="https://github.com/neovim/neovim/blob/master/BUILD.md">BUILD.md</a></p>
+<h3>Making neovim requires packages</h3>
+<p>Here are the packages i needed to install from apt to get neovim</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> apt install cmake gettext lua5.1 liblua5.1-0-dev
+</code></pre><h3>Lets get the libraries first</h3>
+<p>Lets translate what I installed into an ansible command.</p>
+<ul>
+<li>google how to ansible apt</li>
+<li>copy the proper command</li>
+</ul>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Expected Code</h2>
+<p>Your code should look something like this</p>
+<pre><code class="hljs language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">My</span> <span class="hljs-string">first</span> <span class="hljs-string">playbook</span>
+  <span class="hljs-attr">hosts:</span> <span class="hljs-string">localhost</span>
+  <span class="hljs-attr">tasks:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Git</span> <span class="hljs-string">neovim</span>
+    <span class="hljs-attr">ansible.builtin.git:</span>
+      <span class="hljs-attr">repo:</span> <span class="hljs-string">&quot;https://github.com/neovim/neovim.git&quot;</span>
+      <span class="hljs-attr">dest:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">{{ lookup(&#x27;ansible.builtin.env&#x27;, &#x27;HOME&#x27;) }}</span>/personal/neovim&quot;</span>
+      <span class="hljs-attr">version:</span> <span class="hljs-string">v0.10.2</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">helping</span> <span class="hljs-string">libs</span>
+    <span class="hljs-attr">become:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">ansible.builtin.apt:</span>
+      <span class="hljs-attr">pkg:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">lua5.1</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">liblua5.1-0-dev</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">cmake</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">gettext</span>
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>OH NO! Crash!</h2>
+<p>If you are using apt and have to use sudo you should see the following error.</p>
+<pre><code class="hljs language-bash">TASK [Install neovim<span class="hljs-string">&#x27;s deps] *********************************************************
+fatal: [localhost]: FAILED! =&gt; {&quot;changed&quot;: false, &quot;module_stderr&quot;: &quot;sudo: a password is required\n&quot;, &quot;module_stdout&quot;: &quot;&quot;, &quot;msg&quot;: &quot;MODULE FAILURE\nSee stdout/stderr for the exact error&quot;, &quot;rc&quot;: 1}</span>
+</code></pre><p>Well ansible does have the ability to become the sudo but it needs the creds to
+do it, you can type in those creds before installing by using the -K flag</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Now build!</h2>
+<p>Now all we have to build neovim and then sudo make install!  We do the same
+process</p>
+<ul>
+<li>google make</li>
+<li>copy the relevant instructions</li>
+<li>implement the new tasks</li>
+<li>...</li>
+<li>neovim (which is profit)!</li>
+</ul>
+<h3>To make neovim (from BUILD.md)</h3>
+<p>The command to run to make neovim is the following:</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">cd</span> neovim &amp;&amp; make CMAKE_BUILD_TYPE=RelWithDebInfo
+</code></pre><p>then to install it we need to execute</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> make install
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>Expected output</h2>
+<pre><code class="hljs language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">My</span> <span class="hljs-string">first</span> <span class="hljs-string">playbook</span>
+  <span class="hljs-attr">hosts:</span> <span class="hljs-string">localhost</span>
+  <span class="hljs-attr">tasks:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Git</span> <span class="hljs-string">neovim</span>
+    <span class="hljs-attr">ansible.builtin.git:</span>
+      <span class="hljs-attr">repo:</span> <span class="hljs-string">&quot;https://github.com/neovim/neovim.git&quot;</span>
+      <span class="hljs-attr">dest:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">{{ lookup(&#x27;ansible.builtin.env&#x27;, &#x27;HOME&#x27;) }}</span>/personal/neovim&quot;</span>
+      <span class="hljs-attr">version:</span> <span class="hljs-string">v0.9.4</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">helping</span> <span class="hljs-string">libs</span>
+    <span class="hljs-attr">become:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">ansible.builtin.apt:</span>
+      <span class="hljs-attr">pkg:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">lua5.1</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">liblua5.1-0-dev</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">cmake</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">gettext</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">neovim</span>
+    <span class="hljs-attr">make:</span>
+      <span class="hljs-attr">chdir:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">{{ lookup(&#x27;ansible.builtin.env&#x27;, &#x27;HOME&#x27;) }}</span>/personal/neovim&quot;</span>
+      <span class="hljs-attr">params:</span>
+        <span class="hljs-attr">CMAKE_BUILD_TYPE:</span> <span class="hljs-string">&quot;RelWithDebInfo&quot;</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">neovim</span> <span class="hljs-string">install</span>
+    <span class="hljs-attr">become:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">make:</span>
+      <span class="hljs-attr">target:</span> <span class="hljs-string">install</span>
+      <span class="hljs-attr">chdir:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">{{ lookup(&#x27;ansible.builtin.env&#x27;, &#x27;HOME&#x27;) }}</span>/personal/neovim&quot;</span>
+</code></pre><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>And that is ansible</h2>
+<p>that is what it takes to create neovim ansible.</p>
+<br>
+<br>
+
+<h3>Why would i use this over a bash script</h3>
+<p>A bash script is great when you can execute it on a machine, but ansible allows
+you to execute all these operations on a bunch of host machines at once, your
+machine, uniform syntax (yml).  It also allows for some custom logic based on
+operating system so you could interchange out the fetching mechanism to make it
+machine independent</p>
+<br>
+<br>
+
+<p>Ansible can be real great.  It &quot;seems&quot; easier to maintain than having a bunch
+of bash scripts for each operating system.  It can also make automating your
+setup a bit easier.</p>
+<br>
+<br>
+
+<p>But for me... its a no at this point.  I prefer a single script that i control</p>
+<ul>
+<li>some basic convention.  Convention over configuration is a mantra i support</li>
+</ul>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</div><div class="lesson-links"><a href="/dev-prod-2/lessons/your-env/your-env" class="prev">← Previous</a><a href="/dev-prod-2/lessons/your-env/roll-your-own" class="next">Next →</a></div></div><div class="details-bg"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="154" height="154" viewBox="0 0 154 154"><defs><clipPath id="clip-path"><rect id="Rectangle_2238" data-name="Rectangle 2238" width="154" height="154" transform="translate(9467 350)" fill="#fff" stroke="#707070" stroke-width="1"></rect></clipPath><clipPath id="clip-corner-image-active"><rect width="154" height="154"></rect></clipPath></defs><g id="corner-image-active" clip-path="url(#clip-corner-image-active)"><g id="Corner-image-active-2" data-name="Corner-image-active" transform="translate(-9467 -350)" clip-path="url(#clip-path)"><path id="Subtraction_34" data-name="Subtraction 34" d="M-3857.365,1740.766h0l-7.07-7.07,12.89-12.89v14.142l-5.818,5.818Zm-14.142-14.142h0l-7.071-7.07,27.033-27.033v14.143l-19.96,19.96Zm-14.143-14.143h0l-7.07-7.069,41.175-41.175v14.142Zm-14.142-14.142h0l-7.07-7.069,55.317-55.317v14.142Zm-14.142-14.142h0l-7.07-7.069,69.459-69.459v14.142Zm-14.142-14.142h0l-7.07-7.069,76.739-76.739h6.862v7.28Zm-14.143-14.143h0l-7.07-7.069,62.6-62.6h14.142Zm-14.142-14.142h0l-7.07-7.069,48.454-48.454h14.142Zm-14.142-14.142h0l-7.07-7.069,34.312-34.312h14.142Zm-14.142-14.142h0l-7.07-7.069,20.17-20.17h14.142Zm-14.142-14.142h0l-7.071-7.071,6.027-6.027h14.144l-13.1,13.1Zm367.24-56.114v-.909l.455.455-.453.453Z" transform="translate(13472.546 -1236.766)" fill="var(--corner-fill)"></path></g></g></svg></div></div></div></div><footer class="footer"><ul class="socials"><li class="social"><a href="https://twitter.com/theprimeagen"><svg fill="none" height="auto" width="32" xmlns="http://www.w3.org/2000/svg" viewBox="0.254 0.25 500 451.95400000000006"><path d="M394.033.25h76.67L303.202 191.693l197.052 260.511h-154.29L225.118 294.205 86.844 452.204H10.127l179.16-204.77L.254.25H158.46l109.234 144.417zm-26.908 406.063h42.483L135.377 43.73h-45.59z" fill="var(--footer-icons)"></path></svg></a></li><li class="social"><div class="terms"><p>Content Licensed Under CC-BY-NC-4.0</p><p>Code Samples and Exercises Licensed Under Apache 2.0</p><p>Site Designed by<!-- --> <a href="https://www.alexdanielson.com/">Alex Danielson</a></p></div></li></ul></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"attributes":{"title":"Ansible","description":"ansible"},"html":"\u003ch2\u003eAnsible\u003c/h2\u003e\n\u003cp\u003eNow a long running way I have been using to manage my dotfiles have been\nexclusively through ansible.  There are several pluses to managing through\nansible and there are some negatives\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003ePros\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003ethere is tons of online documentation\u003c/li\u003e\n\u003cli\u003eits used more than just managing dotfiles\u003c/li\u003e\n\u003cli\u003eansible vault allows for plain storage of ssh keys!  which is really cool\u003c/li\u003e\n\u003cli\u003eyou can also store a bunch of other cool stuff with ansible vault (think auth passcodes)\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003eCons\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eit can be terribly slow\u003c/li\u003e\n\u003cli\u003eit can be hard to make it work for certain tasks, such as installing neovim\nplugins\u003c/li\u003e\n\u003cli\u003etags can be great and super annoying\u003c/li\u003e\n\u003cli\u003eyaml sucks\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eBasic Ansible\u003c/h2\u003e\n\u003cp\u003elets create a simple ansible script to clone neovim from source and build it\nfrom a specific tagged version\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eWhat is ansible?\u003c/h2\u003e\n\u003cp\u003eFrom their github \u003cbr\u003e\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003eAnsible is a radically simple IT automation system. It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration. Ansible makes complex changes like zero-downtime rolling updates with load balancers easy. More information on the Ansible website.\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003eYou are probably thinking... wait... aren\u0026#39;t we talking about dotfiles and environments?\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eWhy yes we are!\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eThis is a tool designed for \u0026quot;servers\u0026quot; and if you squint your eyes you will\nrealize that you are just working on a \u0026quot;server.\u0026quot;\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eNOTE: feel free to just watch\u003c/h2\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\n\u003ch2\u003eInstall ansible\u003c/h2\u003e\n\u003cp\u003eas all adventures start...\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003epip3 install ansible\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eThe heart of ansible\u003c/h2\u003e\n\u003cp\u003eTypically when you are working with ansible you are using an inventory, which\nis a list of all servers you have proper access to, and a series of playbooks.\nThe playbooks are where we specify the tasks we wish to perform on one or more\nnodes (machines).  The playbook is the heart of ansible\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eAs a friend once said\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003eansible is the helicopter that drops godzilla\u003c/p\u003e\n\u003cp\u003e... godzilla being k8s\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eSince we are operating on our own machine we wont need the inventory part, its\njust \u003ccode\u003elocalhost\u003c/code\u003e\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eLets just jump right into the playbook side of ansible which is where all the\nwork is done\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eYour First Playbook\u003c/h2\u003e\n\u003cp\u003eLets start off by creating a playbook that will use git to download the\ncontents of neovim to a directory in a directory of our choosing\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ecreate a new directory, lets call it \u003ccode\u003emfansible\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003ecreate a file called \u003ccode\u003eneovim.yml\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003einput the following\u003c/li\u003e\n\u003c/ul\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-yml\"\u003e\u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eMy\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003efirst\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eplaybook\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003ehosts:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elocalhost\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003etasks:\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cp\u003ewith this alone we can now execute ansible and see the effects\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eansible-playbook neovim.yml\n\u003c/code\u003e\u003c/pre\u003e\u003cp\u003eand you should see output that is similar to\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e➜  ansible-neovim-example git:(master) ✗ ansible-playbook neovim.yml\n[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match \u0026#x27;all\u0026#x27;\n\nPLAY [The Great Neovim editor] *****************************************************************************************************\n\nTASK [Gathering Facts] *************************************************************************************************************\nok: [localhost]\n\nPLAY RECAP *************************************************************************************************************************\nlocalhost                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eCongrats!\u003c/h2\u003e\n\u003cp\u003eyou have ran your first ansible script!\u003c/p\u003e\n\u003cp\u003eLets do some git\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eLets clone down neovim!\u003c/h2\u003e\n\u003cp\u003eWhen it comes to using ansible, one of my favorite features is the docs and how\nthey are organized.  it just makes it so simple to google and get the exact\nanswer out you need.  ChatGPT is nice to use, but can sometimes lead you into\ntoo much usage of odd features like scripting\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eGoogle ansible git clone\u003c/li\u003e\n\u003cli\u003escroll the documentation and copy the one they suggest\u003c/li\u003e\n\u003cli\u003eperhaps combine a few to make this most efficient!\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eBut where do we put the code we find?  Well... remember that empty \u003ccode\u003etasks\u003c/code\u003e key?\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eExpected Task Output\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-yaml\"\u003e\u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eMy\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003efirst\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eplaybook\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003ehosts:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elocalhost\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003etasks:\u003c/span\u003e\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eGit\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eneovim\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003eansible.builtin.git:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003erepo:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;https://github.com/neovim/neovim.git\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003edest:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-template-variable\"\u003e{{ lookup(\u0026#x27;ansible.builtin.env\u0026#x27;, \u0026#x27;HOME\u0026#x27;) }}\u003c/span\u003e/personal/neovim\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003eversion:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ev0.10.2\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eBecome familiar with the build first\u003c/h2\u003e\n\u003cp\u003ethere will be several libs that you may require to get this working so to do\nthis correctly you will first want to build neovim by hand and keep track of\nthe libraries that you need.  There is likely a list of requirements in the\n\u003ca href=\"https://github.com/neovim/neovim/blob/master/BUILD.md\"\u003eBUILD.md\u003c/a\u003e\u003c/p\u003e\n\u003ch3\u003eMaking neovim requires packages\u003c/h3\u003e\n\u003cp\u003eHere are the packages i needed to install from apt to get neovim\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003e\u003cspan class=\"hljs-built_in\"\u003esudo\u003c/span\u003e apt install cmake gettext lua5.1 liblua5.1-0-dev\n\u003c/code\u003e\u003c/pre\u003e\u003ch3\u003eLets get the libraries first\u003c/h3\u003e\n\u003cp\u003eLets translate what I installed into an ansible command.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003egoogle how to ansible apt\u003c/li\u003e\n\u003cli\u003ecopy the proper command\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eExpected Code\u003c/h2\u003e\n\u003cp\u003eYour code should look something like this\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-yaml\"\u003e\u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eMy\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003efirst\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eplaybook\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003ehosts:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elocalhost\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003etasks:\u003c/span\u003e\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eGit\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eneovim\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003eansible.builtin.git:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003erepo:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;https://github.com/neovim/neovim.git\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003edest:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-template-variable\"\u003e{{ lookup(\u0026#x27;ansible.builtin.env\u0026#x27;, \u0026#x27;HOME\u0026#x27;) }}\u003c/span\u003e/personal/neovim\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003eversion:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ev0.10.2\u003c/span\u003e\n\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eInstall\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ehelping\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elibs\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003ebecome:\u003c/span\u003e \u003cspan class=\"hljs-literal\"\u003etrue\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003eansible.builtin.apt:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003epkg:\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elua5.1\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eliblua5.1-0-dev\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ecmake\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003egettext\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eOH NO! Crash!\u003c/h2\u003e\n\u003cp\u003eIf you are using apt and have to use sudo you should see the following error.\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003eTASK [Install neovim\u003cspan class=\"hljs-string\"\u003e\u0026#x27;s deps] *********************************************************\nfatal: [localhost]: FAILED! =\u0026gt; {\u0026quot;changed\u0026quot;: false, \u0026quot;module_stderr\u0026quot;: \u0026quot;sudo: a password is required\\n\u0026quot;, \u0026quot;module_stdout\u0026quot;: \u0026quot;\u0026quot;, \u0026quot;msg\u0026quot;: \u0026quot;MODULE FAILURE\\nSee stdout/stderr for the exact error\u0026quot;, \u0026quot;rc\u0026quot;: 1}\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cp\u003eWell ansible does have the ability to become the sudo but it needs the creds to\ndo it, you can type in those creds before installing by using the -K flag\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eNow build!\u003c/h2\u003e\n\u003cp\u003eNow all we have to build neovim and then sudo make install!  We do the same\nprocess\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003egoogle make\u003c/li\u003e\n\u003cli\u003ecopy the relevant instructions\u003c/li\u003e\n\u003cli\u003eimplement the new tasks\u003c/li\u003e\n\u003cli\u003e...\u003c/li\u003e\n\u003cli\u003eneovim (which is profit)!\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003eTo make neovim (from BUILD.md)\u003c/h3\u003e\n\u003cp\u003eThe command to run to make neovim is the following:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003e\u003cspan class=\"hljs-built_in\"\u003ecd\u003c/span\u003e neovim \u0026amp;\u0026amp; make CMAKE_BUILD_TYPE=RelWithDebInfo\n\u003c/code\u003e\u003c/pre\u003e\u003cp\u003ethen to install it we need to execute\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-bash\"\u003e\u003cspan class=\"hljs-built_in\"\u003esudo\u003c/span\u003e make install\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eExpected output\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-yaml\"\u003e\u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eMy\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003efirst\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eplaybook\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003ehosts:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elocalhost\u003c/span\u003e\n  \u003cspan class=\"hljs-attr\"\u003etasks:\u003c/span\u003e\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eGit\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eneovim\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003eansible.builtin.git:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003erepo:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;https://github.com/neovim/neovim.git\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003edest:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-template-variable\"\u003e{{ lookup(\u0026#x27;ansible.builtin.env\u0026#x27;, \u0026#x27;HOME\u0026#x27;) }}\u003c/span\u003e/personal/neovim\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003eversion:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ev0.9.4\u003c/span\u003e\n\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eInstall\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ehelping\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elibs\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003ebecome:\u003c/span\u003e \u003cspan class=\"hljs-literal\"\u003etrue\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003eansible.builtin.apt:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003epkg:\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003elua5.1\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eliblua5.1-0-dev\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003ecmake\u003c/span\u003e\n      \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003egettext\u003c/span\u003e\n\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eneovim\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003emake:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003echdir:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-template-variable\"\u003e{{ lookup(\u0026#x27;ansible.builtin.env\u0026#x27;, \u0026#x27;HOME\u0026#x27;) }}\u003c/span\u003e/personal/neovim\u0026quot;\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003eparams:\u003c/span\u003e\n        \u003cspan class=\"hljs-attr\"\u003eCMAKE_BUILD_TYPE:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;RelWithDebInfo\u0026quot;\u003c/span\u003e\n\n  \u003cspan class=\"hljs-bullet\"\u003e-\u003c/span\u003e \u003cspan class=\"hljs-attr\"\u003ename:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003eneovim\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003einstall\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003ebecome:\u003c/span\u003e \u003cspan class=\"hljs-literal\"\u003etrue\u003c/span\u003e\n    \u003cspan class=\"hljs-attr\"\u003emake:\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003etarget:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003einstall\u003c/span\u003e\n      \u003cspan class=\"hljs-attr\"\u003echdir:\u003c/span\u003e \u003cspan class=\"hljs-string\"\u003e\u0026quot;\u003cspan class=\"hljs-template-variable\"\u003e{{ lookup(\u0026#x27;ansible.builtin.env\u0026#x27;, \u0026#x27;HOME\u0026#x27;) }}\u003c/span\u003e/personal/neovim\u0026quot;\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch2\u003eAnd that is ansible\u003c/h2\u003e\n\u003cp\u003ethat is what it takes to create neovim ansible.\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003ch3\u003eWhy would i use this over a bash script\u003c/h3\u003e\n\u003cp\u003eA bash script is great when you can execute it on a machine, but ansible allows\nyou to execute all these operations on a bunch of host machines at once, your\nmachine, uniform syntax (yml).  It also allows for some custom logic based on\noperating system so you could interchange out the fetching mechanism to make it\nmachine independent\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eAnsible can be real great.  It \u0026quot;seems\u0026quot; easier to maintain than having a bunch\nof bash scripts for each operating system.  It can also make automating your\nsetup a bit easier.\u003c/p\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\u003cp\u003eBut for me... its a no at this point.  I prefer a single script that i control\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003esome basic convention.  Convention over configuration is a mantra i support\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n","markdown":"\n## Ansible\nNow a long running way I have been using to manage my dotfiles have been\nexclusively through ansible.  There are several pluses to managing through\nansible and there are some negatives\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Pros\n* there is tons of online documentation\n* its used more than just managing dotfiles\n* ansible vault allows for plain storage of ssh keys!  which is really cool\n* you can also store a bunch of other cool stuff with ansible vault (think auth passcodes)\n\n## Cons\n* it can be terribly slow\n* it can be hard to make it work for certain tasks, such as installing neovim\n  plugins\n* tags can be great and super annoying\n* yaml sucks\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Basic Ansible\nlets create a simple ansible script to clone neovim from source and build it\nfrom a specific tagged version\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## What is ansible?\nFrom their github \u003cbr\u003e\n\u003e Ansible is a radically simple IT automation system. It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration. Ansible makes complex changes like zero-downtime rolling updates with load balancers easy. More information on the Ansible website.\n\nYou are probably thinking... wait... aren't we talking about dotfiles and environments?\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nWhy yes we are!\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nThis is a tool designed for \"servers\" and if you squint your eyes you will\nrealize that you are just working on a \"server.\"\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## NOTE: feel free to just watch\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n\n## Install ansible\nas all adventures start...\n\n```\npip3 install ansible\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## The heart of ansible\nTypically when you are working with ansible you are using an inventory, which\nis a list of all servers you have proper access to, and a series of playbooks.\nThe playbooks are where we specify the tasks we wish to perform on one or more\nnodes (machines).  The playbook is the heart of ansible\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nAs a friend once said\n\u003e ansible is the helicopter that drops godzilla\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e\n\u003e ... godzilla being k8s\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nSince we are operating on our own machine we wont need the inventory part, its\njust `localhost`\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nLets just jump right into the playbook side of ansible which is where all the\nwork is done\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Your First Playbook\nLets start off by creating a playbook that will use git to download the\ncontents of neovim to a directory in a directory of our choosing\n\n* create a new directory, lets call it `mfansible`\n* create a file called `neovim.yml`\n* input the following\n\n```yml\n- name: My first playbook\n  hosts: localhost\n  tasks:\n```\n\nwith this alone we can now execute ansible and see the effects\n\n```\nansible-playbook neovim.yml\n```\n\nand you should see output that is similar to\n\n```\n➜  ansible-neovim-example git:(master) ✗ ansible-playbook neovim.yml\n[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'\n\nPLAY [The Great Neovim editor] *****************************************************************************************************\n\nTASK [Gathering Facts] *************************************************************************************************************\nok: [localhost]\n\nPLAY RECAP *************************************************************************************************************************\nlocalhost                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Congrats!\nyou have ran your first ansible script!\n\nLets do some git\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Lets clone down neovim!\nWhen it comes to using ansible, one of my favorite features is the docs and how\nthey are organized.  it just makes it so simple to google and get the exact\nanswer out you need.  ChatGPT is nice to use, but can sometimes lead you into\ntoo much usage of odd features like scripting\n\n* Google ansible git clone\n* scroll the documentation and copy the one they suggest\n* perhaps combine a few to make this most efficient!\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nBut where do we put the code we find?  Well... remember that empty `tasks` key?\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Expected Task Output\n\n\n```yaml\n- name: My first playbook\n  hosts: localhost\n  tasks:\n  - name: Git neovim\n    ansible.builtin.git:\n      repo: \"https://github.com/neovim/neovim.git\"\n      dest: \"{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim\"\n      version: v0.10.2\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Become familiar with the build first\nthere will be several libs that you may require to get this working so to do\nthis correctly you will first want to build neovim by hand and keep track of\nthe libraries that you need.  There is likely a list of requirements in the\n[BUILD.md](https://github.com/neovim/neovim/blob/master/BUILD.md)\n\n### Making neovim requires packages\nHere are the packages i needed to install from apt to get neovim\n\n```bash\nsudo apt install cmake gettext lua5.1 liblua5.1-0-dev\n```\n\n### Lets get the libraries first\nLets translate what I installed into an ansible command.\n\n* google how to ansible apt\n* copy the proper command\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Expected Code\nYour code should look something like this\n\n```yaml\n- name: My first playbook\n  hosts: localhost\n  tasks:\n  - name: Git neovim\n    ansible.builtin.git:\n      repo: \"https://github.com/neovim/neovim.git\"\n      dest: \"{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim\"\n      version: v0.10.2\n\n  - name: Install helping libs\n    become: true\n    ansible.builtin.apt:\n      pkg:\n      - lua5.1\n      - liblua5.1-0-dev\n      - cmake\n      - gettext\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## OH NO! Crash!\nIf you are using apt and have to use sudo you should see the following error.\n\n```bash\nTASK [Install neovim's deps] *********************************************************\nfatal: [localhost]: FAILED! =\u003e {\"changed\": false, \"module_stderr\": \"sudo: a password is required\\n\", \"module_stdout\": \"\", \"msg\": \"MODULE FAILURE\\nSee stdout/stderr for the exact error\", \"rc\": 1}\n```\n\nWell ansible does have the ability to become the sudo but it needs the creds to\ndo it, you can type in those creds before installing by using the -K flag\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Now build!\nNow all we have to build neovim and then sudo make install!  We do the same\nprocess\n\n* google make\n* copy the relevant instructions\n* implement the new tasks\n* ...\n* neovim (which is profit)!\n\n### To make neovim (from BUILD.md)\nThe command to run to make neovim is the following:\n\n```bash\ncd neovim \u0026\u0026 make CMAKE_BUILD_TYPE=RelWithDebInfo\n```\n\nthen to install it we need to execute\n\n```bash\nsudo make install\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## Expected output\n```yaml\n- name: My first playbook\n  hosts: localhost\n  tasks:\n  - name: Git neovim\n    ansible.builtin.git:\n      repo: \"https://github.com/neovim/neovim.git\"\n      dest: \"{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim\"\n      version: v0.9.4\n\n  - name: Install helping libs\n    become: true\n    ansible.builtin.apt:\n      pkg:\n      - lua5.1\n      - liblua5.1-0-dev\n      - cmake\n      - gettext\n\n  - name: neovim\n    make:\n      chdir: \"{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim\"\n      params:\n        CMAKE_BUILD_TYPE: \"RelWithDebInfo\"\n\n  - name: neovim install\n    become: true\n    make:\n      target: install\n      chdir: \"{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim\"\n```\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n## And that is ansible\nthat is what it takes to create neovim ansible.\n\n\u003cbr\u003e\n\u003cbr\u003e\n\n### Why would i use this over a bash script\nA bash script is great when you can execute it on a machine, but ansible allows\nyou to execute all these operations on a bunch of host machines at once, your\nmachine, uniform syntax (yml).  It also allows for some custom logic based on\noperating system so you could interchange out the fetching mechanism to make it\nmachine independent\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nAnsible can be real great.  It \"seems\" easier to maintain than having a bunch\nof bash scripts for each operating system.  It can also make automating your\nsetup a bit easier.\n\n\u003cbr\u003e\n\u003cbr\u003e\n\nBut for me... its a no at this point.  I prefer a single script that i control\n+ some basic convention.  Convention over configuration is a mantra i support\n\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\n","slug":"ansible","title":"Ansible","section":"Your Env","icon":"info-circle","filePath":"/home/runner/work/dev-prod-2/dev-prod-2/lessons/02-your-env/B-ansible.md","nextSlug":"/dev-prod-2/lessons/your-env/roll-your-own","prevSlug":"/dev-prod-2/lessons/your-env/your-env"}},"__N_SSG":true},"page":"/lessons/[section]/[slug]","query":{"section":"your-env","slug":"ansible"},"buildId":"9mr2VSKi99OqOhejAzbQC","assetPrefix":"/dev-prod-2","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
