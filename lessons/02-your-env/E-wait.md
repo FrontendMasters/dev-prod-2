@@ -225,7 +225,7 @@ copy_file() {
     from=$1
     to=$2
     name=$(basename $from)
-    execute rm $from
+    execute rm $to/$name 
     execute cp $from $to/$name
 }
 
